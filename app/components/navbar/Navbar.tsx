@@ -7,7 +7,8 @@ import Logo from "./Logo"
 const Navbar = () => {
     return (
         <nav className="
-        bg-deepPurple flex items-center
+        z-20
+        bg-deepBlue flex items-center
         lg:flex-col lg:h-screen 
         ">
             <Logo />

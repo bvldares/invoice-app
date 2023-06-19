@@ -14,7 +14,7 @@ const FilteringDropDown: React.FC<FilteringProps> = ({ isDark }) => {
     return (
         <div className={` 
             rounded-lg p-6 shadow-md
-            absolute top-10 
+            absolute top-10 right-0 
             ${isDark ? "text-white bg-deepPurple" : " bg-white text-black"}
             `}
             onMouseLeave={() => toggleDropDown()}
