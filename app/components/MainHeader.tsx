@@ -1,6 +1,6 @@
 "use client"
 
-import NewInvoice from "./buttons/NewInvoice"
+import NewInvoiceButton from "./buttons/NewInvoiceButton"
 import StatusFilter from "./filter/StatusFilter"
 import useInvoiceStore from "@/store"
 
@@ -16,7 +16,7 @@ const MainHeader = () => {
             </div>
 
             <StatusFilter />
-            <NewInvoice />
+            <NewInvoiceButton />
 
         </section>
     )
