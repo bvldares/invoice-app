@@ -4,7 +4,7 @@ import logo from "@/public/logo.svg"
 
 const Logo = () => {
     return (
-        <div>
+        <div className='bg-intensePurple w-fit p-logo'>
             <Image
                 width={40}
                 height={40}
@@ -12,6 +12,7 @@ const Logo = () => {
                 src={logo}
             />
         </div>
+
     )
 }
 

@@ -21,6 +21,9 @@ module.exports = {
         deepBlue: "#252945",
         deepPurple: "#141625",
       },
+      padding: {
+        logo: "23px",
+      },
     },
   },
   plugins: [],
