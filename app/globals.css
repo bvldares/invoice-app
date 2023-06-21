@@ -6,3 +6,12 @@ body::-webkit-scrollbar,
 form::-webkit-scrollbar {
   display: none;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}

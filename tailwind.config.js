@@ -24,6 +24,10 @@ module.exports = {
       padding: {
         logo: "23px",
       },
+      gridTemplateColumns: {
+        columnItems: "214px 50px 100px 50px 20px",
+        sideItemGrid: "50px, 100px 50px 20px",
+      },
     },
   },
   plugins: [],
