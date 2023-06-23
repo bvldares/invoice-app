@@ -27,9 +27,9 @@ const InvoiceProduct: React.FC<itemElement> = ({ index, remove, watch, register,
     return (
         <motion.div
             key={index}
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0, translateX: "300px" }}
+            initial={{ opacity: 0, }}
+            animate={{ opacity: 1, }}
+            exit={{ opacity: 0, scale: 0, translateY: "-300px" }}
             transition={{ duration: .4 }}
             className="flex flex-wrap md:flex-nowrap transition gap-y-3 mb-6"
         >

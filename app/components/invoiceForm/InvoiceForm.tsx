@@ -3,17 +3,20 @@
 import { useForm, SubmitHandler, useFieldArray } from "react-hook-form"
 import useInvoiceStore from "@/store"
 import FormInput from "./FormInput"
-import FormSubmitter from "./FormSubmitter"
 import InvoiceProduct from "./InvoiceProduct"
 import Inputs from "@/types/formTypes"
 import { AnimatePresence, motion } from "framer-motion"
+import AddNewItem from "@/app/components/buttons/AddNewItem"
+import supabase from "@/supabase"
+import DiscardButton from "../buttons/DiscardButton"
+import SaveAsDraftButton from "../buttons/SaveAsDraft"
 
 const InvoiceForm = () => {
-    const { isDark, toggleNewForm } = useInvoiceStore()
+    const { isDark, toggleNewForm, deliveryStatus } = useInvoiceStore()
     const { register, handleSubmit, reset, control, watch } = useForm<Inputs>()
     const onSubmit: SubmitHandler<Inputs> = data => {
-        console.log(data)
         reset()
+        return data
     }
 
     const { fields, append, remove } = useFieldArray({
@@ -24,7 +27,7 @@ const InvoiceForm = () => {
     return (
         <motion.div
             key="modal"
-            className="absolute inset-0 lg:left-[82px] top-0 lg:top-0  bg-black/40 z-10"
+            className="absolute inset-0  top-0 lg:top-0  bg-black/40 z-10"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -36,7 +39,7 @@ const InvoiceForm = () => {
                 key="form"
                 initial={{ translateX: "-615px", opacity: 0 }}
                 transition={{ duration: .4 }}
-                animate={{ translateX: "0px", opacity: 1 }}
+                animate={{ translateX: 0, opacity: 1 }}
                 exit={{ translateX: "-615px" }}
                 className={`absolute top-0 left-0 bottom-0 right-0 md:w-[615px] lg:left-0 lg:top-0 ${!isDark ? "bg-white" : "bg-deepPurple"}`}>
                 <form
@@ -90,26 +93,18 @@ const InvoiceForm = () => {
                             )
                         })}
                     </AnimatePresence>
+                    <AddNewItem append={append} isDark={isDark} label="+ Add New Item" key={"btn"} />
 
+                    <div className="flex justify-between w-full mt-6">
+                        <DiscardButton reset={reset} />
+                        <div>
+                            <SaveAsDraftButton />
 
-                    <button
-                        type="button"
-                        onClick={() => append({
-                            name: "",
-                            price: 0,
-                            quantity: 1,
-                            totalPrice: 0
-                        })}
-                        className={`
-                        ${isDark ? "bg-deepBlue text-white" : "bg-paleGray text-palePurple"} 
-                        font-bold py-4 w-full rounded-full mt-4`} >
-                        + Add New Item
-                    </button>
+                        </div>
+                    </div>
 
-                    <FormSubmitter reset={reset} save={() => onSubmit} />
                 </form>
             </motion.div>
-
         </motion.div>
     )
 }
