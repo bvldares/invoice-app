@@ -7,16 +7,45 @@ import InvoiceProduct from "./InvoiceProduct"
 import Inputs from "@/types/formTypes"
 import { AnimatePresence, motion } from "framer-motion"
 import AddNewItem from "@/app/components/buttons/AddNewItem"
-import supabase from "@/supabase"
 import DiscardButton from "../buttons/DiscardButton"
-import SaveAsDraftButton from "../buttons/SaveAsDraft"
+import SaveAsDraft from "../buttons/SaveAsDraft"
+import SaveAndSend from "../buttons/SaveAndSend"
+import supabase from "@/supabase"
+
+
 
 const InvoiceForm = () => {
     const { isDark, toggleNewForm, deliveryStatus } = useInvoiceStore()
     const { register, handleSubmit, reset, control, watch } = useForm<Inputs>()
-    const onSubmit: SubmitHandler<Inputs> = data => {
+    const onSubmit: SubmitHandler<Inputs> = async formData => {
+        const { data, error } = await supabase
+            .from("Invoice")
+            .insert([{
+                drawerAddress: formData.drawerAddress,
+                drawerCity: formData.drawerCity,
+                drawerPostCode: formData.drawerPostCode,
+                drawerCountry: formData.drawerCountry,
+                clientName: formData.clientName,
+                clientEmail: formData.clientEmail,
+                clientAddress: formData.clientAddress,
+                clientCity: formData.clientCity,
+                clientPostCode: formData.clientPostCode,
+                clientCountry: formData.clientCountry,
+                invoiceDate: formData.invoiceDate,
+                paymentTerms: formData.paymentTerms,
+                projectDescription: formData.projectDescription,
+                deliveryStatus: deliveryStatus,
+                isPaid: false,
+                services: formData.services
+            }])
+
+
+        if (data) console.log(data)
+        if (error) console.log(error)
+
+        console.log(formData)
+        toggleNewForm()
         reset()
-        return data
     }
 
     const { fields, append, remove } = useFieldArray({
@@ -97,8 +126,9 @@ const InvoiceForm = () => {
 
                     <div className="flex justify-between w-full mt-6">
                         <DiscardButton reset={reset} />
-                        <div>
-                            <SaveAsDraftButton />
+                        <div className="flex gap-3 items-center">
+                            <SaveAsDraft />
+                            <SaveAndSend />
 
                         </div>
                     </div>

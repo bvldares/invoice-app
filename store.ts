@@ -9,8 +9,8 @@ type Store = {
   toggleDropDown: () => void;
   showNewForm: boolean;
   toggleNewForm: () => void;
-  deliveryStatus: string;
-  setDeliveryStatus: (status: string) => void;
+  deliveryStatus: boolean;
+  setDeliveryStatus: (status: boolean) => void;
 };
 
 const useInvoiceStore = create<Store>((set) => ({
@@ -18,7 +18,7 @@ const useInvoiceStore = create<Store>((set) => ({
   dropDownOpen: false,
   isDark: false,
   showNewForm: false,
-  deliveryStatus: "",
+  deliveryStatus: false,
   setDeliveryStatus: (status) => set((state) => ({ deliveryStatus: status })),
   toggleNewForm: () => set((state) => ({ showNewForm: !state.showNewForm })),
   setFilter: (filter) => set((state) => ({ filter: filter })),

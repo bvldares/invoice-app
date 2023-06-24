@@ -19,10 +19,10 @@ const AddNewItem: React.FC<newItemBtn> = ({ isDark, append, label }) => {
                 totalPrice: 0
             })}
             className={`
-        ${isDark ? "bg-deepBlue text-white" : "bg-paleGray text-palePurple"} 
-        font-bold py-4 w-full rounded-full mt-4
-        hover:shadow-md
-        `}
+            ${isDark ? "bg-deepBlue text-white" : "bg-paleGray text-palePurple"} 
+            font-bold py-4 w-full rounded-full mt-4
+            hover:shadow-md
+            `}
         >
             {label}
         </button>
