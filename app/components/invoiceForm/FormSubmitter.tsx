@@ -16,9 +16,6 @@ const FormSubmitter: React.FC<FormSubmitter> = ({ data, reset }) => {
         reset()
     }
 
-
-
-
     return (
         <div className="flex flex-col-reverse sm:flex-row sm:items-center gap-3 mt-20">
             <button
@@ -29,8 +26,8 @@ const FormSubmitter: React.FC<FormSubmitter> = ({ data, reset }) => {
                 Discard
             </button>
             <div className="ml-auto flex items-center gap-3 w-full sm:w-fit">
-                <SubmitFormButton bgColor="bg-[#373B53]" textColor="text-paleGray" label="Save as Draft" handleClick={() => setDeliveryStatus("draft")} />
-                <SubmitFormButton bgColor="bg-intensePurple" textColor="text-paleGray" label="Save & Send" handleClick={() => setDeliveryStatus} />
+                <SubmitFormButton bgColor="bg-[#373B53]" textColor="text-paleGray" label="Save as Draft" handleClick={() => setDeliveryStatus(false)} />
+                <SubmitFormButton bgColor="bg-intensePurple" textColor="text-paleGray" label="Save & Send" handleClick={() => setDeliveryStatus(true)} />
             </div>
         </div>
     )

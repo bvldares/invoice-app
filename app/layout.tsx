@@ -1,7 +1,9 @@
+"use client"
+
 import Navbar from './components/navbar/Navbar'
 import './globals.css'
 import { League_Spartan } from 'next/font/google'
-
+import { SessionProvider } from "next-auth/react"
 const inter = League_Spartan({ subsets: ['latin'] })
 
 export const metadata = {
@@ -17,10 +19,12 @@ export default function RootLayout({
   return (
     <html lang="en" className='scroll-smooth'>
       <body className={inter.className}>
-        <div className='lg:flex bg-deepPurple'>
-          <Navbar />
-          {children}
-        </div>
+        <SessionProvider >
+          <div className='lg:flex bg-deepPurple'>
+            <Navbar />
+            {children}
+          </div>
+        </SessionProvider>
       </body>
     </html>
   )

@@ -11,39 +11,46 @@ import DiscardButton from "../buttons/DiscardButton"
 import SaveAsDraft from "../buttons/SaveAsDraft"
 import SaveAndSend from "../buttons/SaveAndSend"
 import supabase from "@/supabase"
+import { useSession } from "next-auth/react"
 
 
 
 const InvoiceForm = () => {
+    const { data: session, status } = useSession()
     const { isDark, toggleNewForm, deliveryStatus } = useInvoiceStore()
     const { register, handleSubmit, reset, control, watch } = useForm<Inputs>()
     const onSubmit: SubmitHandler<Inputs> = async formData => {
-        const { data, error } = await supabase
-            .from("Invoice")
-            .insert([{
-                drawerAddress: formData.drawerAddress,
-                drawerCity: formData.drawerCity,
-                drawerPostCode: formData.drawerPostCode,
-                drawerCountry: formData.drawerCountry,
-                clientName: formData.clientName,
-                clientEmail: formData.clientEmail,
-                clientAddress: formData.clientAddress,
-                clientCity: formData.clientCity,
-                clientPostCode: formData.clientPostCode,
-                clientCountry: formData.clientCountry,
-                invoiceDate: formData.invoiceDate,
-                paymentTerms: formData.paymentTerms,
-                projectDescription: formData.projectDescription,
-                deliveryStatus: deliveryStatus,
-                isPaid: false,
-                services: formData.services
-            }])
+        if (status === "authenticated") {
+            const { data, error } = await supabase
+                .from("Invoice")
+                .insert([{
+                    drawerAddress: formData.drawerAddress,
+                    drawerCity: formData.drawerCity,
+                    drawerPostCode: formData.drawerPostCode,
+                    drawerCountry: formData.drawerCountry,
+                    clientName: formData.clientName,
+                    clientEmail: formData.clientEmail,
+                    clientAddress: formData.clientAddress,
+                    clientCity: formData.clientCity,
+                    clientPostCode: formData.clientPostCode,
+                    clientCountry: formData.clientCountry,
+                    invoiceDate: formData.invoiceDate,
+                    paymentTerms: formData.paymentTerms,
+                    projectDescription: formData.projectDescription,
+                    deliveryStatus: deliveryStatus,
+                    isPaid: false,
+                    services: formData.services,
+                    user_id: session?.user?.id
+                }])
+
+            if (data) console.log(data)
+            if (error) console.log(error)
+
+        }
 
 
-        if (data) console.log(data)
-        if (error) console.log(error)
 
-        console.log(formData)
+
         toggleNewForm()
         reset()
     }
@@ -74,6 +81,8 @@ const InvoiceForm = () => {
                 <form
                     className="flex flex-col  overflow-y-scroll h-full form p-12"
                     onSubmit={handleSubmit(onSubmit)}>
+
+
                     <h3 className="font-bold text-brillantPurple text-[15px] capitalize">Bill from</h3>
                     <FormInput type="text" register={register} field="drawerAddress" text="Street Address" />
                     <div className="md:grid grid-cols-3 gap-3">

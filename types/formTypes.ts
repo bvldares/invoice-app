@@ -11,8 +11,11 @@ type Inputs = {
   clientCountry: string;
   invoiceDate: string;
   paymentTerms: string;
+  isPaid: boolean;
   projectDescription: string;
   services?: Service[];
+  user_id: string;
+  deliveryStatus: boolean;
 };
 
 type Service = {
