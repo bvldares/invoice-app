@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { nanoid } from "nanoid";
 type Store = {
   isDark: boolean;
   toggleDark: () => void;
@@ -11,10 +10,15 @@ type Store = {
   toggleNewForm: () => void;
   deliveryStatus: boolean;
   setDeliveryStatus: (status: boolean) => void;
+  availableInvoices: number;
+  setAvailableInvoices: (length: number) => void;
 };
 
 const useInvoiceStore = create<Store>((set) => ({
   filter: "all",
+  availableInvoices: 0,
+  setAvailableInvoices: (length) =>
+    set((state) => ({ availableInvoices: length })),
   dropDownOpen: false,
   isDark: false,
   showNewForm: false,

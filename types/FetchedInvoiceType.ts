@@ -1,5 +1,6 @@
-type Inputs = {
+type FetchedInvoice = {
   id: number;
+  created_at: string;
   drawerAddress: string;
   drawerCity: string;
   drawerPostCode: string;
@@ -23,6 +24,7 @@ type Service = {
   name: string;
   quantity: number;
   price: number;
+  totalPrice: number;
 };
 
-export default Inputs;
+export default FetchedInvoice;
