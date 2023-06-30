@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 body::-webkit-scrollbar,
-form::-webkit-scrollbar {
+form::-webkit-scrollbar,
+.noscroll::-webkit-scrollbar {
   display: none;
 }
 
