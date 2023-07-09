@@ -1,9 +1,15 @@
 "use client"
 
-const EditBtn = () => {
+type EditButton = {
+    toggleEditModal: () => void
+}
+
+const EditBtn: React.FC<EditButton> = ({ toggleEditModal }) => {
 
     return (
-        <button className="btn-invoice bg-deepPurple">
+        <button
+            onClick={toggleEditModal}
+            className="btn-invoice bg-deepPurple">
             Edit
         </button>
 

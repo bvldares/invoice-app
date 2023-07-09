@@ -11,11 +11,12 @@ import InvoiceBody from '../components/DynamicSegmentInvoice/InvoiceBody'
 import EditBtn from '../components/DynamicSegmentInvoice/DynamicSegmentButtons/EditBtn'
 import DeleteBtn from '../components/DynamicSegmentInvoice/DynamicSegmentButtons/DeleteBtn'
 import MarkAsPaid from '../components/DynamicSegmentInvoice/DynamicSegmentButtons/MarkAsPaid'
-import { AnimatePresence } from 'framer-motion'
 import DeleteModal from '../components/DynamicSegmentInvoice/DynamicSegmentModals/DelteModal'
+import EditForm from '../components/DynamicSegmentInvoice/DynamicSegmentModals/editForm/EditForm'
 
 export default function InvoiceDetails({ params }: { params: { id: string } }) {
     const [deleteModal, setDeleteModal] = useState(false)
+    const [editModal, setEditModal] = useState(false)
     const [invoice, setInvoice] = useState<any>([])
     const router = useRouter()
     const { isDark } = useInvoiceStore()
@@ -36,10 +37,8 @@ export default function InvoiceDetails({ params }: { params: { id: string } }) {
         fetchInvoice()
     }, [session])
 
-    const toggleDeleteModal = () => {
-        setDeleteModal(!deleteModal);
-    };
-
+    const toggleDeleteModal = () => setDeleteModal(!deleteModal);
+    const toggleEditModal = () => setEditModal(!editModal);
 
     return (
         <main className={`w-full h-screen ${isDark ? "bg-deepPurple transition duration-500 text-paleGray" : "bg-gray-200 transition duration-500 text-black"} relative`}>
@@ -52,19 +51,20 @@ export default function InvoiceDetails({ params }: { params: { id: string } }) {
                     <span className='mt-[1.5px] font-bold'>Go back</span>
                 </button>
 
-                <InvoiceHeader isPaid={invoice.isPaid} invoiceId={invoice.id} toggleDeleteModal={toggleDeleteModal} />
+                <InvoiceHeader isPaid={invoice.isPaid} invoiceId={invoice.id} toggleEditModal={toggleEditModal} toggleDeleteModal={toggleDeleteModal} />
                 <InvoiceBody {...invoice} />
 
 
                 <div className={`flex justify-center gap-4 rounded-lg  p-4 items-center sm:hidden 
                 ${isDark ? "bg-deepBlue" : "bg-white"} -mb-4 mt-4`}>
-                    <EditBtn />
+                    <EditBtn toggleEditModal={toggleEditModal} />
                     <DeleteBtn toggleDeleteModal={toggleDeleteModal} />
                     <MarkAsPaid invoiceId={invoice.id} />
                 </div>
             </div>
 
             {deleteModal && <DeleteModal id={invoice.id} toggleDeleteModal={toggleDeleteModal} />}
+            {editModal && <EditForm {...invoice} toggleEditModal={toggleEditModal} />}
         </main>
     )
 

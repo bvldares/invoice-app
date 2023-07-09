@@ -4,7 +4,7 @@
 
 import { MdDeleteOutline } from "react-icons/md"
 import useInvoiceStore from "@/store"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 
 type itemElement = {
     register: any,
