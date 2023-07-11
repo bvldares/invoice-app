@@ -1,14 +1,11 @@
 "use client"
+import useInvoiceStore from "@/store"
 
-type EditButton = {
-    toggleEditModal: () => void
-}
-
-const EditBtn: React.FC<EditButton> = ({ toggleEditModal }) => {
-
+const EditBtn = () => {
+    const { setEditModal } = useInvoiceStore()
     return (
         <button
-            onClick={toggleEditModal}
+            onClick={setEditModal}
             className="btn-invoice bg-deepPurple">
             Edit
         </button>

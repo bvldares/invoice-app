@@ -12,11 +12,15 @@ type Store = {
   setDeliveryStatus: (status: boolean) => void;
   availableInvoices: number;
   setAvailableInvoices: (length: number) => void;
+  editModal: boolean;
+  setEditModal: () => void;
 };
 
 const useInvoiceStore = create<Store>((set) => ({
   filter: "all",
   availableInvoices: 0,
+  editModal: false,
+  setEditModal: () => set((state) => ({ editModal: !state.editModal })),
   setAvailableInvoices: (length) =>
     set((state) => ({ availableInvoices: length })),
   dropDownOpen: false,

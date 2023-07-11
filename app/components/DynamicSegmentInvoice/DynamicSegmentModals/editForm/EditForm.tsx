@@ -1,22 +1,37 @@
 "use client"
 import Inputs from "@/types/formTypes"
-import { AnimatePresence, motion } from "framer-motion"
-import { useForm, SubmitHandler, useFieldArray } from "react-hook-form"
-import InvoiceProduct from "../../../invoiceForm/InvoiceProduct"
-import AddNewItem from "../../../buttons/AddNewItem"
+import { motion } from "framer-motion"
+import { useForm, SubmitHandler } from "react-hook-form"
 import useInvoiceStore from "@/store"
 import EditFormInput from "./EditFormInput"
+import supabase from "@/supabase"
 
-const EditForm: React.FC<Inputs> = (invoice, toggleEditModal) => {
-    const { register, handleSubmit, control, watch } = useForm<Inputs>()
-    const { isDark } = useInvoiceStore()
+const EditForm = (invoice: any) => {
+    const { register, handleSubmit } = useForm<Inputs>()
+    const { isDark, setEditModal } = useInvoiceStore()
 
-    const { fields, append, remove } = useFieldArray({
-        control,
-        name: "services"
-    })
+    const onSubmit: SubmitHandler<Inputs> = async (formData) => {
+        const { data, error } = await supabase
+            .from("Invoice")
+            .update([{
+                drawerAddress: formData.drawerAddress,
+                drawerCity: formData.drawerCity,
+                drawerPostCode: formData.drawerPostCode,
+                drawerCountry: formData.drawerCountry,
+                clientName: formData.clientName,
+                clientEmail: formData.clientEmail,
+                clientAddress: formData.clientAddress,
+                clientCity: formData.clientCity,
+                clientPostCode: formData.clientPostCode,
+                clientCountry: formData.clientCountry,
+                invoiceDate: formData.invoiceDate,
+                paymentTerms: formData.paymentTerms,
+                projectDescription: formData.projectDescription,
+            }])
+            .eq("id", invoice.id)
 
-    const onSubmit = () => {
+        if (data) console.log(data)
+        if (error) console.log(error)
 
     }
 
@@ -28,7 +43,7 @@ const EditForm: React.FC<Inputs> = (invoice, toggleEditModal) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={toggleEditModal}
+            onClick={setEditModal}
         >
 
             <motion.div
@@ -41,9 +56,8 @@ const EditForm: React.FC<Inputs> = (invoice, toggleEditModal) => {
                 className={`absolute top-0 left-0 bottom-0 right-0 md:w-[615px] lg:left-0 lg:top-0 ${!isDark ? "bg-white" : "bg-deepPurple"}`}>
                 <form
                     className="flex flex-col  overflow-y-scroll h-full form p-12"
-                    onSubmit={handleSubmit(onSubmit)}>
-
-
+                    onSubmit={handleSubmit(onSubmit)}
+                >
                     <h3 className="font-bold text-brillantPurple text-[15px] capitalize">Bill from</h3>
                     <EditFormInput type="text" defaultValue={invoice.drawerAddress} register={register} field="drawerAddress" text="Street Address" />
                     <div className="md:grid grid-cols-3 gap-3">
@@ -75,33 +89,24 @@ const EditForm: React.FC<Inputs> = (invoice, toggleEditModal) => {
                         </div>
 
                     </div>
-                    <EditFormInput type="text" defaultValue={invoice.projectDescription} register={register} field="projectDescription" text="Project Description" />
+                    <EditFormInput
+                        type="text"
+                        defaultValue={invoice.projectDescription}
+                        register={register}
+                        field="projectDescription"
+                        text="Project Description"
+                    />
 
-                    <h3 className="text-[#777F98] font-bold tracking-[-0.43px] mt-10" >Item List</h3>
-
-
-
-                    <AnimatePresence>
-                        {fields.map((field, index) => {
-                            return (
-                                <InvoiceProduct
-                                    key={field.id}
-                                    index={index}
-                                    register={register}
-                                    watch={watch}
-                                    remove={remove}
-                                />
-                            )
-                        })}
-                    </AnimatePresence>
-                    <AddNewItem append={append} isDark={isDark} label="+ Add New Item" key={"btn"} />
-
-
-
+                    <button
+                        className="py-3 px-5 ml-auto mt-4 bg-palePurple hover:bg-deepPurple border-palePurple hover:border-white border-[2px] hover:box-border transition-all text-white font-bold
+                        rounded-full">
+                        Update
+                    </button>
                 </form>
             </motion.div>
         </motion.div>
     )
 }
+
 
 export default EditForm

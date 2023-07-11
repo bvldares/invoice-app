@@ -9,10 +9,10 @@ type paid = {
     isPaid: boolean
     invoiceId: number
     toggleDeleteModal: () => void
-    toggleEditModal: () => void
+
 }
 
-const InvoiceHeader: React.FC<paid> = ({ isPaid, invoiceId, toggleDeleteModal, toggleEditModal }) => {
+const InvoiceHeader: React.FC<paid> = ({ isPaid, invoiceId, toggleDeleteModal }) => {
     const { isDark } = useInvoiceStore()
 
     return (
@@ -24,7 +24,7 @@ const InvoiceHeader: React.FC<paid> = ({ isPaid, invoiceId, toggleDeleteModal, t
                 <InvoiceStatus isPaid={isPaid} />
             </div>
             <div className="hidden sm:flex items-center gap-2">
-                <EditBtn toggleEditModal={toggleEditModal} />
+                <EditBtn />
                 <DeleteBtn toggleDeleteModal={toggleDeleteModal} />
                 <MarkAsPaid invoiceId={invoiceId} />
             </div>
