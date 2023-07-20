@@ -19,6 +19,6 @@ input[type="number"] {
 
 @layer components {
   .btn-invoice {
-    @apply px-6 py-4 font-bold rounded-full shrink-0 text-[15px] text-white hover:bg-opacity-70;
+    @apply px-6 py-4 font-bold rounded-full shrink-0 text-[12px] sm:text-[15px] text-white hover:bg-opacity-70;
   }
 }
