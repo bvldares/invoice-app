@@ -13,7 +13,7 @@ const EditForm = (invoice: any) => {
     const onSubmit: SubmitHandler<Inputs> = async (formData) => {
         const { data, error } = await supabase
             .from("Invoice")
-            .update([{
+            .update({
                 drawerAddress: formData.drawerAddress,
                 drawerCity: formData.drawerCity,
                 drawerPostCode: formData.drawerPostCode,
@@ -27,11 +27,12 @@ const EditForm = (invoice: any) => {
                 invoiceDate: formData.invoiceDate,
                 paymentTerms: formData.paymentTerms,
                 projectDescription: formData.projectDescription,
-            }])
+            })
             .eq("id", invoice.id)
+            .select()
 
         if (data) console.log(data)
-        if (error) console.log(error)
+        if (error) console.log(formData)
 
     }
 
@@ -98,6 +99,7 @@ const EditForm = (invoice: any) => {
                     />
 
                     <button
+                        onClick={setEditModal}
                         className="py-3 px-5 ml-auto mt-4 bg-palePurple hover:bg-deepPurple border-palePurple hover:border-white border-[2px] hover:box-border transition-all text-white font-bold
                         rounded-full">
                         Update
